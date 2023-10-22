@@ -15,12 +15,19 @@ def get_users(db: Session, skip: int = 0, limit: int = 100):
 
 
 def create_user(db: Session, user: schemas.UserCreate):
-    # fake_hashed_password = user.password + "notreallyhashed" , hashed_password=fake_hashed_password
     db_user = models.User(username=user.username, password=user.password, isAdmin=user.isAdmin, balance=user.balance)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
     return db_user
+
+
+def create_transport(db: Session, transport: schemas.TransportCreate):
+    db_transport = models.Transport(users_id=transport.users_id, canBeRented=transport.canBeRented, transportType=transport.transportType, model=transport.model, color=transport.color, identifier=transport.identifier, description=transport.description, latitude=transport.latitude, longitude=transport.longitude, minutePrice=transport.minutePrice, dayPrice=transport.dayPrice, radius=transport.radius)
+    db.add(db_transport)
+    db.commit()
+    db.refresh(db_transport)
+    return db_transport
 
 
 def get_rents(db: Session, skip: int = 0, limit: int = 100):

@@ -48,14 +48,11 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     return db_user
 
 
-@app.post("/users/{user_id}/items/", response_model=schemas.Rent)
-def create_rent_for_user(
-    user_id: int, rent: schemas.RentCreate, db: Session = Depends(get_db)
-):
-    return crud.create_user_rent(db=db, rent=rent, user_id=user_id)
+@app.post("/api/Transport", response_model=schemas.Transport)
+def create_transport(transport: schemas.TransportCreate, db: Session = Depends(get_db)):
+    return crud.create_transport(db=db, transport=transport)
 
 
-@app.get("/items/", response_model=list[schemas.Rent])
-def read_rent(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    rent = crud.get_rents(db, skip=skip, limit=limit)
-    return rent
+@app.post("/api/Admin/Rent/", response_model=schemas.Rent)
+def create_rent_for_user(rent: schemas.RentCreate, db: Session = Depends(get_db)):
+    return crud.create_user_rent(db=db, rent=rent)

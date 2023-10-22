@@ -44,12 +44,12 @@ class User(UserBase):
 
 
 class TransportBase(BaseModel):
-    pass
+    model: str
+    identifier: str
 
 
 class TransportCreate(UserBase):
-    users_id: int
-    canBeRented: str
+    canBeRented: bool
     transportType: str
     model: str
     color: str
@@ -64,7 +64,7 @@ class TransportCreate(UserBase):
 
 class Transport(UserBase):
     id: int
-    rents_users: list[Rent] = []
+    rents_users: list[User] = []
 
     class Config:
         from_attributes = True
