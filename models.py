@@ -9,7 +9,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String)
     password = Column(String)
-    isAdmin = Column(Boolean)
+    isAdmin = Column(Boolean, default='false')
     balance = Column(Double)
     # rents_users = relationship("Rent", back_populates="rent_user")
 

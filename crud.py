@@ -23,19 +23,24 @@ def create_user(db: Session, user: schemas.UserCreate):
 
 
 def create_transport(db: Session, transport: schemas.TransportCreate):
-    db_transport = models.Transport(users_id=transport.users_id, canBeRented=transport.canBeRented, transportType=transport.transportType, model=transport.model, color=transport.color, identifier=transport.identifier, description=transport.description, latitude=transport.latitude, longitude=transport.longitude, minutePrice=transport.minutePrice, dayPrice=transport.dayPrice, radius=transport.radius)
+    db_transport = models.Transport(users_id=transport.users_id, canBeRented=transport.canBeRented,
+                                    transportType=transport.transportType, model=transport.model, color=transport.color,
+                                    identifier=transport.identifier, description=transport.description,
+                                    latitude=transport.latitude, longitude=transport.longitude,
+                                    minutePrice=transport.minutePrice, dayPrice=transport.dayPrice,
+                                    radius=transport.radius)
     db.add(db_transport)
     db.commit()
     db.refresh(db_transport)
     return db_transport
 
 
-def get_rents(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Rent).offset(skip).limit(limit).all()
+def get_rents(db: Session, rentId: int):
+    return db.query(models.Rent).filter(models.Rent.id == rentId).all()
 
 
-def create_user_rent(db: Session, rent: schemas.RentCreate, user_id: int):
-    db_rent = models.Rent(**rent.dict(), rent_user_id=user_id)
+def create_user_rent(db: Session, rent: schemas.RentCreate):
+    db_rent = models.Rent(**rent.dict())
     db.add(db_rent)
     db.commit()
     db.refresh(db_rent)

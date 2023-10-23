@@ -17,8 +17,7 @@ class RentCreate(RentBase):
 
 
 class Rent(RentBase):
-    rent_user_id: int
-    rent_transports_id: int
+    id: int
 
     class Config:
         from_attributes = True
