@@ -36,6 +36,10 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id: int
+    username: str
+    password: str
+    isAdmin: bool
+    balance: float
     rents_users: list[Rent] = []
 
     class Config:
